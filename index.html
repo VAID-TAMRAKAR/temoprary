@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Canvas AI - Hand Tracking Painter</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.8/vision_bundle.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.15.0/dist/tf.min.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>AirCanvas <span class="ai-badge">AI</span></h2>
+            </div>
+
+            <div class="panel status-panel">
+                <div class="status-item">
+                    <span>Camera/Hand:</span>
+                    <span id="hand-status" class="status-badge disconnected">Disconnected</span>
+                </div>
+                <div class="status-item">
+                    <span>FPS:</span>
+                    <span id="fps-counter">0</span>
+                </div>
+                <div class="status-item">
+                    <span>Gesture:</span>
+                    <span id="gesture-status">None</span>
+                </div>
+            </div>
+
+            <div class="panel ai-panel">
+                <h3>AI Recognition</h3>
+                <div class="prediction-box">
+                    <div id="predicted-shape">Analyzing Canvas...</div>
+                    <div class="confidence-bar-container">
+                        <div id="confidence-bar" style="width: 0%"></div>
+                    </div>
+                    <div id="confidence-text">Confidence: 0%</div>
+                </div>
+            </div>
+
+            <div class="panel tools-panel">
+                <h3>Brush Controls</h3>
+                
+                <div class="control-group">
+                    <label for="brush-size">Size: <span id="size-val">8px</span></label>
+                    <input type="range" id="brush-size" min="2" max="40" value="8">
+                </div>
+
+                <div class="tool-buttons">
+                    <button id="btn-draw" class="tool-btn active" title="Draw Tool">✏️ Draw</button>
+                    <button id="btn-erase" class="tool-btn" title="Eraser Tool">🧽 Eraser</button>
+                </div>
+
+                <div class="history-buttons">
+                    <button id="btn-undo" class="action-btn" title="Undo">↩️ Undo</button>
+                    <button id="btn-redo" class="action-btn" title="Redo">↪️ Redo</button>
+                    <button id="btn-clear" class="action-btn danger" title="Clear Canvas">🗑️ Clear</button>
+                </div>
+            </div>
+
+            <div class="panel color-panel">
+                <h3>Color Palette</h3>
+                <div class="preset-colors">
+                    <button class="color-dot active" data-color="#ff4757" style="background: #ff4757;"></button>
+                    <button class="color-dot" data-color="#2ed573" style="background: #2ed573;"></button>
+                    <button class="color-dot" data-color="#1e90ff" style="background: #1e90ff;"></button>
+                    <button class="color-dot" data-color="#ffa502" style="background: #ffa502;"></button>
+                    <button class="color-dot" data-color="#9b59b6" style="background: #9b59b6;"></button>
+                    <button class="color-dot" data-color="#ffffff" style="background: #ffffff;"></button>
+                </div>
+                <div class="custom-color-picker">
+                    <label for="color-picker">Custom Color:</label>
+                    <input type="color" id="color-picker" value="#ff4757">
+                </div>
+            </div>
+
+            <div class="panel utility-panel">
+                <button id="btn-save" class="action-btn success">💾 Save Drawing (PNG)</button>
+                <button id="btn-fullscreen" class="action-btn secondary">🔲 Fullscreen</button>
+            </div>
+            
+            <div class="instructions">
+                <p>💡 <strong>Tip:</strong> Raise <strong>Index Finger</strong> to Draw. Raise <strong>Index + Middle Fingers</strong> together to hover/pause drawing!</p>
+            </div>
+        </aside>
+
+        <main class="viewport">
+            <div class="canvas-wrapper">
+                <video id="webcam" autoplay playsinline muted></video>
+                
+                <canvas id="tracking-canvas"></canvas>
+                
+                <canvas id="drawing-canvas"></canvas>
+
+                <div id="loading-overlay" class="overlay">
+                    <div class="spinner"></div>
+                    <p>Initializing AI Engines & Camera feed...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

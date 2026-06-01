@@ -1,0 +1,312 @@
+/* Modern Reset and CSS Variables */
+:root {
+    --bg-dark: #0f111a;
+    --glass-bg: rgba(255, 255, 255, 0.06);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --text-main: #f1f2f6;
+    --text-muted: #a4b0be;
+    --accent-color: #00d2d3;
+    --danger-color: #ff6b6b;
+    --success-color: #1dd1a1;
+    --panel-radius: 16px;
+    --transition-speed: 0.3s;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* App Main Layout Structure */
+.app-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* Sidebar Styling (Glassmorphism) */
+.sidebar {
+    width: 360px;
+    min-width: 340px;
+    background: linear-gradient(135deg, rgba(20, 24, 41, 0.85), rgba(10, 12, 22, 0.95));
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid var(--glass-border);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    z-index: 10;
+    overflow-y: auto;
+    box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+}
+
+.logo h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ai-badge {
+    background: linear-gradient(45deg, #00g, var(--accent-color));
+    color: #000;
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: 900;
+}
+
+/* Shared Panel Interface styling */
+.panel {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--panel-radius);
+    padding: 16px;
+    transition: transform var(--transition-speed);
+}
+
+.panel h3 {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Status Badges */
+.status-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.9rem;
+}
+.status-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.status-badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+.status-badge.connected { background-color: rgba(29, 209, 161, 0.2); color: var(--success-color); }
+.status-badge.disconnected { background-color: rgba(255, 107, 107, 0.2); color: var(--danger-color); }
+
+/* AI Metric Bars */
+.prediction-box {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+}
+#predicted-shape {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: var(--accent-color);
+    margin-bottom: 8px;
+}
+.confidence-bar-container {
+    background: rgba(255, 255, 255, 0.1);
+    height: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 6px;
+}
+#confidence-bar {
+    background: linear-gradient(90deg, var(--accent-color), var(--success-color));
+    height: 100%;
+    transition: width 0.2s linear;
+}
+#confidence-text {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* Tool Buttons Controls */
+.control-group {
+    margin-bottom: 14px;
+}
+.control-group label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+}
+input[type="range"] {
+    width: 100%;
+    accent-color: var(--accent-color);
+    cursor: pointer;
+}
+
+.tool-buttons, .history-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+.history-buttons {
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+button {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--glass-border);
+    color: var(--text-main);
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+button:hover {
+    background: rgba(255, 255, 255, 0.18);
+    transform: translateY(-1px);
+}
+button:active { transform: translateY(1px); }
+button.active {
+    background: var(--accent-color);
+    color: #000;
+    border-color: var(--accent-color);
+}
+
+.action-btn.danger { background: rgba(255, 107, 107, 0.15); color: var(--danger-color); border-color: rgba(255, 107, 107, 0.3); }
+.action-btn.danger:hover { background: var(--danger-color); color: #fff; }
+.action-btn.success { background: rgba(29, 209, 161, 0.15); color: var(--success-color); border-color: rgba(29, 209, 161, 0.3); width: 100%; margin-bottom: 8px;}
+.action-btn.success:hover { background: var(--success-color); color: #fff; }
+.action-btn.secondary { width: 100%; }
+
+/* Color Swatch Dots */
+.preset-colors {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+.color-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    padding: 0;
+    transition: transform 0.2s ease;
+}
+.color-dot:hover { transform: scale(1.15); }
+.color-dot.active {
+    border-color: #fff;
+    box-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+.custom-color-picker {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+}
+input[type="color"] {
+    border: none;
+    width: 40px;
+    height: 25px;
+    border-radius: 4px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.instructions {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+    border-left: 3px solid var(--accent-color);
+    padding-left: 8px;
+}
+
+/* Viewport Canvas Drawing Stage */
+.viewport {
+    flex-grow: 1;
+    position: relative;
+    background: #05070f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.canvas-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: 1280px;
+    max-height: 720px;
+    aspect-ratio: 16 / 9;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+/* Stack Video and Canvas Layers Exactly Over Each Other */
+#webcam, #tracking-canvas, #drawing-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scaleX(-1); /* Mirror view for natural drawing intuition */
+}
+
+#webcam {
+    z-index: 1;
+    opacity: 0.45; /* Blended dark viewport environment */
+}
+
+#tracking-canvas {
+    z-index: 2;
+    pointer-events: none; /* Let interface track events natively */
+}
+
+#drawing-canvas {
+    z-index: 3;
+}
+
+/* Overlay screens */
+.overlay {
+    position: absolute;
+    top:0; left:0; width:100%; height:100%;
+    background: rgba(10, 12, 22, 0.9);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    transition: opacity 0.5s ease;
+}
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(255,255,255,0.1);
+    border-top-color: var(--accent-color);
+    border-radius: 50%;
+    animation: spin 1s infinite linear;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Responsiveness Adaptations */
+@media (max-width: 1024px) {
+    .app-container { flex-direction: column-reverse; }
+    .sidebar { width: 100%; height: auto; max-height: 40%; overflow-y: auto; }
+    .viewport { height: 60%; }
+}
